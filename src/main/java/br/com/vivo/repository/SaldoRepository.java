@@ -10,6 +10,6 @@ import java.util.List;
 @Repository
 public interface SaldoRepository extends JpaRepository<Saldo, Long> {
 
-    @Query("from ConsumoSaldo c where c.produto.id =:id")
+    @Query("from Saldo c where c.produto.id =:id")
     List<Saldo> findByProduto(Long id );
 }

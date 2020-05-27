@@ -8,7 +8,9 @@ import br.com.vivo.model.Saldo;
 import br.com.vivo.repository.SaldoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -27,7 +29,7 @@ public class SaldoService {
     @Autowired
     private ClienteService clienteService;
 
-    @CacheEvict(cacheNames = "ConsumoContaParcial", allEntries = true)
+    @CacheEvict(cacheNames = "findAllCache")
     public Saldo criar(CriarSaldoDto dto) {
         Produto produto = produtoService.buscarPorId(dto.getIdProduto());
         Saldo saldo = new Saldo();
@@ -35,6 +37,10 @@ public class SaldoService {
         return saldoRepository.save(saldo);
     }
 
+    @Caching(put = {
+            @CachePut(value = "findAllCache"),
+            @CachePut(value = "findByIdCache", key = "#id")
+    })
     public Saldo atualizar(Long id, CriarSaldoDto dto) {
         Produto produto = produtoService.buscarPorId(dto.getIdProduto());
         final Saldo saldo = buscarPorId(id);
@@ -50,7 +56,11 @@ public class SaldoService {
         return saldoRepository.findById(id).orElseThrow(NaoEncontradoException::new);
     }
 
-    @Cacheable(cacheNames = "ConsumoContaParcial", key = "#root.todos")
+    @Cacheable(
+            cacheNames = "findByIdCache",
+            key = "#id",
+            unless = "#result == null"
+    )
     public List<Saldo> buscarTodosPorId(List<Long> ids) {
         return saldoRepository.findAllById(ids);
     }
@@ -65,7 +75,7 @@ public class SaldoService {
 
         cliente.getProdutos()
                 .forEach(produto -> {
-                    produto.getConsumoContaParciais()
+                    buscarTodosPorId(List.of(produto.getId()))
                             .stream()
                             .filter(s -> s.getAnoReferencia().equals(anoAtual) && s.getMesReferencia().equals(mesAtual))
                             .forEach(consumoSaldo -> saldos.add(consumoSaldo));

@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @Getter
@@ -13,7 +14,7 @@ import java.time.LocalDateTime;
 @Table(name = "saldo")
 @EqualsAndHashCode(of = {"id"})
 @NoArgsConstructor
-public class Saldo {
+public class Saldo implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

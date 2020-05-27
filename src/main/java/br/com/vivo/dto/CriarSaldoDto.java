@@ -1,9 +1,13 @@
 package br.com.vivo.dto;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.io.Serializable;
 
 @Data
-public class CriarSaldoDto {
+@NoArgsConstructor
+public class CriarSaldoDto implements Serializable {
 
     private Integer saldoDados;
 
