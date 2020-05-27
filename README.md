@@ -11,7 +11,7 @@ As definições da arquitetura, foi baseado nos requisitos não funcionais de di
 * conta
 * produto
 
-### Endpoints importantes:
+### Endpoints/serviço gerenciado com o kafka:
 
 * CdrController
 
