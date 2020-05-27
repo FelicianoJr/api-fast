@@ -7,7 +7,7 @@ As definições da arquitetura, foi baseado nos requisitos não funcionais de di
 * cdr
 
 * cliente
-* consumo_saldo
+* saldo
 * conta
 * produto
 
