@@ -37,7 +37,7 @@ class ClienteControllerTest {
     private ModelMapper modelMapper;
 
     @Test
-    void TesteControllerCriar() throws Exception {
+    void TesteControllerCriarClienteComSucesso() throws Exception {
 
         when(clienteService.criar(any())).thenReturn(new Cliente());
 
@@ -49,7 +49,7 @@ class ClienteControllerTest {
     }
 
     @Test
-    void TesteControllerAtualizar() throws Exception {
+    void TesteControllerAtualizarClienteComSucesso() throws Exception {
 
         given(
                 clienteService.atualizar(any(Long.class), any(AtualizarClienteDto.class))
@@ -63,7 +63,7 @@ class ClienteControllerTest {
     }
 
     @Test
-    void TesteControllerBuscarTodos() throws Exception {
+    void TesteControllerBuscarTodosCleintesComSucesso() throws Exception {
         List<Cliente> clientes = new ArrayList<>();
         when(clienteService.buscarTodos()).thenReturn(clientes);
 
@@ -73,7 +73,4 @@ class ClienteControllerTest {
                 .andExpect(status().isOk());
     }
 
-    @Test
-    void deletar() {
-    }
 }

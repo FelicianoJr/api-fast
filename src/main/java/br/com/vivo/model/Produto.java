@@ -1,26 +1,15 @@
 package br.com.vivo.model;
 
-import java.io.Serializable;
-import java.time.LocalDateTime;
-import java.util.List;
-
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-
 import br.com.vivo.dto.AtualizarProdutoDto;
 import br.com.vivo.dto.CriarProdutoDto;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
+import javax.persistence.*;
+import java.io.Serializable;
+import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @Entity
@@ -61,7 +50,7 @@ public class Produto implements Serializable {
 	private List<Conta> conta;
 
 	@OneToMany(mappedBy = "produto")
-	private List<ConsumoSaldo> consumoContaParciais;
+	private List<Saldo> consumoContaParciais;
 
 	public Produto(CriarProdutoDto dto, Cliente cliente) {
 		this.cliente = cliente;

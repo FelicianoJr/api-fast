@@ -18,13 +18,13 @@ import java.util.List;
 
 @RestController
 @RequestMapping(value = "/api/v1/contas", produces = "application/json")
-@Api(tags = {"Api", "Conta"})
+@Api(tags = {"Api", "Contas"})
 public class ContaController extends MapperConverter<ContaDto, Conta> {
 
     @Autowired
     private ContaService contaService;
 
-    @GetMapping("/pagamento/{cpf}")
+    @GetMapping("/{cpf}")
     @ApiOperation(value = "Listar conta por cpf")
     @ApiResponses({
             @ApiResponse(

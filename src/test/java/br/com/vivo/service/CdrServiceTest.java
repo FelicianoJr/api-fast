@@ -12,11 +12,12 @@ import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.anyLong;
-import static org.mockito.Mockito.doNothing;
-import static org.mockito.Mockito.verify;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
 public class CdrServiceTest {
@@ -49,12 +50,30 @@ public class CdrServiceTest {
     }
 
     @Test
-    public void TestaDeletarPorIdCdrComSucesso() {
+    public void TesteDeletarPorIdCdrComSucesso() {
 
         doNothing().when(cdrRepository).deleteById(1L);
 
         cdrService.deletar(1L);
 
         verify(cdrRepository).deleteById(anyLong());
+    }
+
+    @Test
+    public void TestarBuscarPorNumeroDoProdutoComSucesso() {
+
+        CriarCdrDto criarCdrDto = new CriarCdrDto();
+        criarCdrDto.setOrigem("71888579875");
+        criarCdrDto.setDestino("7185859639");
+        criarCdrDto.setFormato(Formato.VOZ);
+
+        Cdr cdr = new Cdr(criarCdrDto);
+
+        when(cdrRepository.findByOrigem("2343434333")).thenReturn(List.of(cdr));
+
+        final List<Cdr> cdrs = cdrService.buscarPorOrigem("2343434333");
+
+        assertEquals(1, cdrs.size());
+        verify(cdrRepository).findByOrigem(anyString());
     }
 }

@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @Slf4j
-public class ProducerCdrCreate {
+public class ProducerCdrCriacao {
 
     @Autowired
     private KafkaTemplate<String, CriarCdrDto> kafkaTemplate;

@@ -1,11 +1,11 @@
 package br.com.vivo.service;
 
-import br.com.vivo.dto.CriarConsumoSaldoDto;
+import br.com.vivo.dto.CriarSaldoDto;
 import br.com.vivo.exception.NaoEncontradoException;
 import br.com.vivo.model.Cliente;
-import br.com.vivo.model.ConsumoSaldo;
 import br.com.vivo.model.Produto;
-import br.com.vivo.repository.ConsumoParcialRepository;
+import br.com.vivo.model.Saldo;
+import br.com.vivo.repository.SaldoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
@@ -16,10 +16,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class ConsumoParcialService {
+public class SaldoService {
 
     @Autowired
-    private ConsumoParcialRepository consumoParcialRepository;
+    private SaldoRepository saldoRepository;
 
     @Autowired
     private ProdutoService produtoService;
@@ -28,37 +28,37 @@ public class ConsumoParcialService {
     private ClienteService clienteService;
 
     @CacheEvict(cacheNames = "ConsumoContaParcial", allEntries = true)
-    public ConsumoSaldo criar(CriarConsumoSaldoDto dto) {
+    public Saldo criar(CriarSaldoDto dto) {
         Produto produto = produtoService.buscarPorId(dto.getIdProduto());
-        ConsumoSaldo consumoSaldo = new ConsumoSaldo();
-        consumoSaldo.atualizar(dto, produto);
-        return consumoParcialRepository.save(consumoSaldo);
+        Saldo saldo = new Saldo();
+        saldo.atualizar(dto, produto);
+        return saldoRepository.save(saldo);
     }
 
-    public ConsumoSaldo atualizar(Long id, CriarConsumoSaldoDto dto) {
+    public Saldo atualizar(Long id, CriarSaldoDto dto) {
         Produto produto = produtoService.buscarPorId(dto.getIdProduto());
-        final ConsumoSaldo consumoSaldo = buscarPorId(id);
-        consumoSaldo.atualizar(dto, produto);
-        return consumoParcialRepository.save(consumoSaldo);
+        final Saldo saldo = buscarPorId(id);
+        saldo.atualizar(dto, produto);
+        return saldoRepository.save(saldo);
     }
 
-    public List<ConsumoSaldo> buscarProdutoId(Long id) {
-        return consumoParcialRepository.findByProduto(id);
+    public List<Saldo> buscarProdutoId(Long id) {
+        return saldoRepository.findByProduto(id);
     }
 
-    public ConsumoSaldo buscarPorId(Long id) {
-        return consumoParcialRepository.findById(id).orElseThrow(NaoEncontradoException::new);
+    public Saldo buscarPorId(Long id) {
+        return saldoRepository.findById(id).orElseThrow(NaoEncontradoException::new);
     }
 
     @Cacheable(cacheNames = "ConsumoContaParcial", key = "#root.todos")
-    public List<ConsumoSaldo> buscarTodosPorId(List<Long> ids) {
-        return consumoParcialRepository.findAllById(ids);
+    public List<Saldo> buscarTodosPorId(List<Long> ids) {
+        return saldoRepository.findAllById(ids);
     }
 
-    public List<ConsumoSaldo> buscarSaldoAtual(String cpf) {
+    public List<Saldo> buscarSaldoAtual(String cpf) {
 
         final Cliente cliente = clienteService.buscarPorCpfNumeroProduto(cpf);
-        final List<ConsumoSaldo> consumoSaldos = new ArrayList<>();
+        final List<Saldo> saldos = new ArrayList<>();
 
         var mesAtual = String.valueOf(LocalDateTime.now().getMonthValue());
         var anoAtual = String.valueOf(LocalDateTime.now().getYear());
@@ -68,9 +68,9 @@ public class ConsumoParcialService {
                     produto.getConsumoContaParciais()
                             .stream()
                             .filter(s -> s.getAnoReferencia().equals(anoAtual) && s.getMesReferencia().equals(mesAtual))
-                            .forEach(consumoSaldo -> consumoSaldos.add(consumoSaldo));
+                            .forEach(consumoSaldo -> saldos.add(consumoSaldo));
                 });
 
-        return consumoSaldos;
+        return saldos;
     }
 }

@@ -1,8 +1,8 @@
 package br.com.vivo.controller.cdr;
 
 import br.com.vivo.dto.CriarCdrDto;
-import br.com.vivo.stream.producer.ProducerCdrCreate;
-import br.com.vivo.stream.producer.ProducerCdrDelete;
+import br.com.vivo.stream.producer.ProducerCdrCriacao;
+import br.com.vivo.stream.producer.ProducerCdrDelecao;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -17,10 +17,10 @@ import org.springframework.web.bind.annotation.*;
 public class CdrController {
 
     @Autowired
-    private ProducerCdrCreate producerCdrCreate;
+    private ProducerCdrCriacao producerCdrCriacao;
 
     @Autowired
-    private ProducerCdrDelete producerCdrDelete;
+    private ProducerCdrDelecao producerCdrDelecao;
 
     @PostMapping
     @ApiOperation(value = "Registrar cdr, operação assincrona")
@@ -34,7 +34,7 @@ public class CdrController {
                     message = "cdr não encontrado."
             )})
     public ResponseEntity<Void> registrar(@RequestBody CriarCdrDto criarCdrDto) {
-        producerCdrCreate.send(criarCdrDto);
+        producerCdrCriacao.send(criarCdrDto);
         return ResponseEntity.noContent().build();
     }
 
@@ -49,7 +49,8 @@ public class CdrController {
                     code = 404,
                     message = "cdr não encontrado."
             )})
-    public void deletar(@PathVariable String id) {
-        producerCdrDelete.send(id);
+    public ResponseEntity<Void> deletar(@PathVariable String id) {
+        producerCdrDelecao.send(id);
+        return ResponseEntity.noContent().build();
     }
 }

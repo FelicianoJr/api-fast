@@ -1,6 +1,6 @@
 package br.com.vivo.service;
 
-import br.com.vivo.dto.CriarConsumoSaldoDto;
+import br.com.vivo.dto.CriarSaldoDto;
 import br.com.vivo.model.Cdr;
 import br.com.vivo.model.Formato;
 import br.com.vivo.model.Produto;
@@ -22,7 +22,7 @@ public class ProcessamentoSaldoService {
     private ProdutoService produtoService;
 
     @Autowired
-    private ConsumoParcialService consumoParcialService;
+    private SaldoService saldoService;
 
     public void registrar(String numeroProduto) {
         log.info("Processamento saldo");
@@ -50,7 +50,7 @@ public class ProcessamentoSaldoService {
         Integer saldoSms = produto.getQtdSms() - qtdSms.intValue();
         Integer saldoVoz = produto.getQtdMinutos() - qtdVoz;
 
-        CriarConsumoSaldoDto dto = new CriarConsumoSaldoDto();
+        CriarSaldoDto dto = new CriarSaldoDto();
         dto.setSaldoDados(saldoDados);
         dto.setSaldoMinutos(saldoVoz);
         dto.setSaldoSms(saldoSms);
@@ -58,15 +58,15 @@ public class ProcessamentoSaldoService {
         dto.setMesReferencia(mes);
         dto.setIdProduto(produto.getId());
 
-        consumoParcialService
+        saldoService
                 .buscarProdutoId(produto.getId())
                 .stream()
                 .filter(consumoSaldo ->
                         consumoSaldo.getMesReferencia().equals(mes)
                                 && consumoSaldo.getAnoReferencia().equals(ano))
                 .findFirst()
-                .ifPresentOrElse(c -> consumoParcialService.atualizar(c.getId(), dto)
-                        , () -> consumoParcialService.criar(dto));
+                .ifPresentOrElse(c -> saldoService.atualizar(c.getId(), dto)
+                        , () -> saldoService.criar(dto));
 
     }
 }

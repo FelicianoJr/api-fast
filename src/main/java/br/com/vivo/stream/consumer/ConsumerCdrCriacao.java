@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @Slf4j
-public class ConsumerCdrCreate {
+public class ConsumerCdrCriacao {
 
     @Autowired
     private CdrService cdrService;

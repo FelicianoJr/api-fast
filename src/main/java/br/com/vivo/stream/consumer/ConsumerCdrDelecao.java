@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @Slf4j
-public class ConsumerCdrDelete {
+public class ConsumerCdrDelecao {
 
     @Autowired
     private CdrService cdrService;

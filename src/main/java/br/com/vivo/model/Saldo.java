@@ -1,6 +1,6 @@
 package br.com.vivo.model;
 
-import br.com.vivo.dto.CriarConsumoSaldoDto;
+import br.com.vivo.dto.CriarSaldoDto;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -10,10 +10,10 @@ import java.time.LocalDateTime;
 
 @Getter
 @Entity
-@Table(name = "consumo_saldo")
+@Table(name = "saldo")
 @EqualsAndHashCode(of = {"id"})
 @NoArgsConstructor
-public class ConsumoSaldo {
+public class Saldo {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -46,7 +46,7 @@ public class ConsumoSaldo {
         this.dataRegistro = LocalDateTime.now();
     }
 
-    public ConsumoSaldo atualizar(CriarConsumoSaldoDto dto, Produto produto) {
+    public Saldo atualizar(CriarSaldoDto dto, Produto produto) {
         this.saldoDados = dto.getSaldoDados();
         this.saldoSms = dto.getSaldoSms();
         this.saldoMinutos = dto.getSaldoMinutos();

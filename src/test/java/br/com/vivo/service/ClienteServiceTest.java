@@ -31,6 +31,9 @@ public class ClienteServiceTest {
     private ClienteService clienteService;
     private CriarClienteDto criarClienteDto;
 
+    @Mock
+    private ContaService contaService;
+
     @Before
     public void setup() {
         criarCliente();

@@ -1,8 +1,8 @@
 package br.com.vivo.controller.mobile;
 
-import br.com.vivo.dto.ConsumoSaldoDto;
-import br.com.vivo.model.ConsumoSaldo;
-import br.com.vivo.service.ConsumoParcialService;
+import br.com.vivo.dto.SaldoDto;
+import br.com.vivo.model.Saldo;
+import br.com.vivo.service.SaldoService;
 import br.com.vivo.util.MapperConverter;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -17,14 +17,14 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/api/v1/consumo", produces = "application/json")
-@Api(tags = {"Api", "Consumo"})
-public class ConsumoController extends MapperConverter<ConsumoSaldoDto, ConsumoSaldo> {
+@RequestMapping(value = "/api/v1/saldo", produces = "application/json")
+@Api(tags = {"Api", "Saldo"})
+public class SaldoController extends MapperConverter<SaldoDto, Saldo> {
 
     @Autowired
-    private ConsumoParcialService consumoParcialService;
+    private SaldoService saldoService;
 
-    @GetMapping("/listar-saldo/{cpf}")
+    @GetMapping("/{cpf}")
     @ApiOperation(value = "Listar saldo  atual por cpf")
     @ApiResponses({
             @ApiResponse(
@@ -35,7 +35,7 @@ public class ConsumoController extends MapperConverter<ConsumoSaldoDto, ConsumoS
                     code = 404,
                     message = "Saldo não encontrado"
             )})
-    public List<ConsumoSaldoDto> listarSaldo(@PathVariable String cpf) {
-        return convertToDto(consumoParcialService.buscarSaldoAtual(cpf));
+    public List<SaldoDto> listarSaldo(@PathVariable String cpf) {
+        return convertToDto(saldoService.buscarSaldoAtual(cpf));
     }
 }

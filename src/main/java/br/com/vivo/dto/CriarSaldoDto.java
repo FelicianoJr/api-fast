@@ -3,7 +3,7 @@ package br.com.vivo.dto;
 import lombok.Data;
 
 @Data
-public class CriarConsumoSaldoDto {
+public class CriarSaldoDto {
 
     private Integer saldoDados;
 

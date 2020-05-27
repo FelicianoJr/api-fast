@@ -3,10 +3,8 @@ package br.com.vivo.dto;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
-import java.util.List;
-
 @Data
-public class ConsumoSaldoDto {
+public class SaldoDto {
 
 	@JsonProperty("saldoDados")
 	private Integer saldoDados;
