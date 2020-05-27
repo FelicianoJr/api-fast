@@ -1,14 +1,51 @@
-# Gotham Project
+# Api Fast
 
-Project
+As definições da arquitetura, foi baseado nos requisitos não funcionais de disponilidade e escalabilidade. Pensando em uma forma de escalar horizontalmente, foi definido o kafka para processar o volume de requisições. Em resumo o kafka é um mensage broker robusto que tem execução assíncrona, com alta disponibilidade e capacidade de recuperar mensagens em uma possível parada do servidor. 
 
-### Docker Compose:
+### Tabelas do Projeto:
 
+* cdr
+
+* cliente
+* consumo_saldo
+* conta
+* produto
+
+### Endpoints importantes:
+
+* CdrController
+
+No CdrController todas requisições são enviadas ao kafka, nesse processo é armazenado no banco o CDR e em seguida uma nova mensagem é enviado ao kafka para processar o saldo atual do cliente. A consulta do saldo é mantido em cache com redis.  
+
+<ul>
+  <li>post - /api/v1/cdr</li>
+  <li>delete - /api/v1/cdr/{id}</li>
+</ul>
+
+Este service é executado por uma scheduler diária, que envia para o kafka gerar a conta do mês para pagamento.
+
+* FechamentoContaService
+
+
+### Tecnologias:
+
+* Spring Boot
 * postgres
 * zookeeper
 * kafka
+* Redis
+* Lombok
+* Swagger
+* Junit4
+* Model Mapper
 
+Comandos para montar o ambiente:
 ```
 docker-compose up -d 
+```
+### Documentação - swagger
+
+```
+http://localhost:8080/swagger-ui.html
 ```
 
