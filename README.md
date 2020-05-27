@@ -22,7 +22,7 @@ No CdrController todas requisições são enviadas ao kafka, nesse processo é a
   <li>delete - /api/v1/cdr/{id}</li>
 </ul>
 
-Este service é executado por uma scheduler diária, que envia para o kafka gerar a conta do mês para pagamento.
+Este service é executado por uma scheduler diária, que envia para o kafka, gerar a conta do mês para pagamento.
 
 * FechamentoContaService
 
@@ -48,4 +48,14 @@ docker-compose up -d
 ```
 http://localhost:8080/swagger-ui.html
 ```
+### Comandos do Redis
 
+Os comandos abaixo mostrará o cache que aplicação criou, no serviço de saldo.
+
+```
+docker exec -it gotham_redis_1 bash
+
+root@redis:/data# redis-cli -p 6379
+
+127.0.0.1:6379> KEYS *
+```
