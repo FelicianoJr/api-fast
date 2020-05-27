@@ -1,7 +1,7 @@
 package br.com.vivo.stream.producer;
 
 import br.com.vivo.dto.CriarCdrDto;
-import br.com.vivo.stream.topics.StreamConfig;
+import br.com.vivo.stream.topics.StreamTopics;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.core.KafkaTemplate;
@@ -16,6 +16,6 @@ public class ProducerCdrCriacao {
 
     public void send(CriarCdrDto criarCdrDto) {
         log.info("Produced new Topic", criarCdrDto);
-        kafkaTemplate.send(StreamConfig.CDR_TOPIC, criarCdrDto);
+        kafkaTemplate.send(StreamTopics.CDR_TOPIC, criarCdrDto);
     }
 }

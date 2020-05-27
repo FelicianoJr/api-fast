@@ -1,6 +1,6 @@
 package br.com.vivo.stream.producer;
 
-import br.com.vivo.stream.topics.StreamConfig;
+import br.com.vivo.stream.topics.StreamTopics;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.core.KafkaTemplate;
@@ -15,6 +15,6 @@ public class ProducerSaldo {
 
     public void send(String numero) {
         log.info("Produced new Topic", numero);
-        kafkaTemplate.send(StreamConfig.SALDO_TOPIC, numero);
+        kafkaTemplate.send(StreamTopics.SALDO_TOPIC, numero);
     }
 }

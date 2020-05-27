@@ -36,6 +36,7 @@ public class ContaService {
 
     public Conta atualizar(Long id, FecharValoresContaDto fecharValoresContaDto) {
         Produto produto = produtoService.buscarPorId(fecharValoresContaDto.getIdProduto());
+        System.out.println(produto.getId());
         Conta conta = buscarPorId(id);
         conta.atualizarFechamento(fecharValoresContaDto, produto);
         return contaRepository.save(conta);

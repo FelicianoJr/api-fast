@@ -1,6 +1,6 @@
 package br.com.vivo.stream.producer;
 
-import br.com.vivo.stream.topics.StreamConfig;
+import br.com.vivo.stream.topics.StreamTopics;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.core.KafkaTemplate;
@@ -15,6 +15,6 @@ public class ProducerCdrDelecao {
 
     public void send(String id) {
         log.info("Produced new Topic", id);
-        kafkaTemplate.send(StreamConfig.CDR_DEL_TOPIC, id);
+        kafkaTemplate.send(StreamTopics.CDR_DEL_TOPIC, id);
     }
 }

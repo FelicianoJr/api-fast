@@ -88,8 +88,8 @@ public class ClienteServiceTest {
     public void TestarBuscarPorIdDoClienteComSucesso() {
 
         final Cliente cliente = new Cliente(criarClienteDto);
-        Optional optionalBills = java.util.Optional.ofNullable(cliente);
-        when(clienteRepository.findById(1L)).thenReturn(optionalBills);
+        Optional optionalCliente = java.util.Optional.ofNullable(cliente);
+        when(clienteRepository.findById(1L)).thenReturn(optionalCliente);
 
         Cliente result = clienteService.buscarPorId(1L);
 

@@ -1,6 +1,6 @@
 package br.com.vivo.stream.topics;
 
-public final class StreamConfig {
+public final class StreamTopics {
 
     public static final String CDR_TOPIC="cdrtopic";
 
