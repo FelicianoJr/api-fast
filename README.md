@@ -50,7 +50,7 @@ http://localhost:8080/swagger-ui.html
 ```
 ### Comandos do Redis
 
-Os comandos abaixo mostrará o cache que aplicação criou, no serviço de saldo.
+Os comandos abaixo mostrará o cache que à aplicação criou, no serviço do saldo.
 
 ```
 docker exec -it gotham_redis_1 bash
